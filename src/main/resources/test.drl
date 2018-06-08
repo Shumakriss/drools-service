@@ -1,0 +1,14 @@
+package org.shumakriss;
+
+import org.shumakriss.Task;
+
+rule "MyRule"
+when
+	Task(status == "Complete")
+then
+	insert(new Task("My Task Name", "Not Started"));
+end
+
+query "get all tasks"
+    task : Task()
+end
