@@ -21,7 +21,10 @@ maintain.
     * Complements a system with existing activity management because it incurs no additional data to manage
     * Can not manage long-running processes by itself
 * Not opinionated about task or process object definitions or their lifecycles
-    * Make any kind of object to represent activities (e.g. a "case")
+    * Make any kind of object to represent activities 
+        * "case" and "activities"
+        * "users", "roles" and "permissions"
+        * "notifications" and "events"
     * Use any status you like for the object
 * Easily manage events
 
@@ -41,6 +44,14 @@ maintain.
     * Do you really understand how the work should be done?
     * Do your systems truly reflect the domain?
     * Do your systems help or inhibit the users?
+    
+**Best of Both**
+* Design your application to function on its own. Preferably with event-driven architecture.
+* Simplify complex business event handling with rules. Do this with an embedded engine in a stateless session.
+* Extract patterns in user behavior and document them with BPMN 2.0
+* Document well-known, legal, or policy-based processes in BPMN 2.0
+* Design your system as event-driven or using event-sourcing
+* Publish and translate (perhaps with rules) application/system events to BPM system
 
 
 
