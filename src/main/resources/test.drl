@@ -1,14 +1,58 @@
 package org.shumakriss;
 
 import org.shumakriss.Task;
+import org.shumakriss.Process;
 
-rule "MyRule"
+rule "Begin first task"
 when
-	Task(status == "Complete")
+    $process : Process()
+	not Task(name == "First task")
 then
-	insert(new Task("My Task Name", "Not Started"));
+	insert(new Task($process.getName(), $process.getId(), "First task", "Not Started"));
 end
+
+
+rule "Second tasks in parallel"
+when
+	$task : Task(name == "First task", status == "Complete")
+	not Task(name == "Second task A")
+	not Task(name == "Second task B")
+then
+	insert(new Task($task.getProcessName(), $task.getProcessId(), "Second task A", "Not Started"));
+	insert(new Task($task.getProcessName(), $task.getProcessId(), "Second task B", "Not Started"));
+end
+
+rule "Second task B rollback"
+when
+	Task(name == "Second task B", status == "Complete")
+    $task : Task(name == "Third task", status == "Rollback")
+then
+	$task.setStatus("Cancelled");
+	insert(new Task($task.getProcessName(), $task.getProcessId(), "Second task B", "Not Started"));
+end
+
+rule "Third task joins"
+when
+	$task : Task(name == "Second task A", status == "Complete")
+	Task(name == "Second task B", status == "Complete")
+	not Task(name == "Third task", status == "Not Started")
+then
+	insert(new Task($task.getProcessName(), $task.getProcessId(), "Third task", "Not Started"));
+end
+
+rule "Process completes"
+when
+	$process : Process(status == "In Progress")
+	$task : Task(name == "Third task", status == "Complete")
+then
+	$process.setStatus("Complete");
+end
+
 
 query "get all tasks"
     task : Task()
+end
+
+query "get all processes"
+    process : Process()
 end

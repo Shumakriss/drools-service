@@ -6,25 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Task {
-
+public class Process {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    private String processName;
-    private Long processId;
     private String name;
     private String status;
-
-    public Task(){}
-
-    public Task(String processName, Long processId, String name, String status) {
-        this.processName = processName;
-        this.processId = processId;
-        this.name = name;
-        this.status = status;
-    }
 
     public Long getId() {
         return id;
@@ -32,22 +20,6 @@ public class Task {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getProcessName() {
-        return processName;
-    }
-
-    public void setProcessName(String processName) {
-        this.processName = processName;
-    }
-
-    public Long getProcessId() {
-        return processId;
-    }
-
-    public void setProcessId(Long processId) {
-        this.processId = processId;
     }
 
     public String getName() {
@@ -68,10 +40,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "Process{" +
                 "id=" + id +
-                ", processName='" + processName + '\'' +
-                ", processId=" + processId +
                 ", name='" + name + '\'' +
                 ", status='" + status + '\'' +
                 '}';
